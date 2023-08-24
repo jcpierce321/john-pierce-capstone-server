@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function(knex) {
-    return knex.schema.createTable("user", function(table) {
+    return knex.schema.createTable("instrument", function(table) {
         table.increments("id");
         table.boolean("flute").notNullable();
         table.boolean("piccolo").notNullable();
@@ -14,12 +14,14 @@ exports.up = function(knex) {
         table.boolean("saxAlto").notNullable();
         table.boolean("saxTenor").notNullable();
         table.boolean("saxBaritone").notNullable();
+        table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         table
-            .foreign("id")
-            .references("users.id")
-            .inTable("users")
+            .integer("user_id")
+            .unsigned()
+            .references("user.id")
             .onUpdate("CASCADE")
-            .onDelete("CASCADE")
+            .onDelete("CASCADE");
 
   });
 };

@@ -11,6 +11,8 @@ exports.up = function(knex) {
         table.string("city").notNullable();
         table.string("website_url").notNullable();
         table.string("primary_instrument").notNullable();
+        table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
     });  
 };
 
