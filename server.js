@@ -1,16 +1,23 @@
-// // const express = require('express');
-// // const cors = require('cors');
-// // const knex = require('knex');
-// // const knexConfig = require('./knexfile');
+// const express = require('express');
+// const cors = require('cors');
+// const knex = require('knex');
+// const knexConfig = require('./knexfile');
+
+const knexConfig = require("../knexfile");
+const knex = require("knex")(knexConfig.development);
 
 const express = require('express');
-const app = express();
+const router = express.Router();
 
-app.get('/', (req, res) => {
-    res.send('Express is running!');
+const usersRoutes = require("./users");
+router.use("/users", usersRoutes);
+
+const instrumentsRoutes = require("./instruments");
+router.use("/instruments", instrumentsRoutes);
+
+router.get("/", async (req, res) => {
+  console.log(req.body);
+  res.status(200).json({ message: "This is home!" });
 });
 
-app.listen(8080, () => {
-    console.log('Server Started on http://localhost:8080');
-    console.log('Press CTRL + C to stop server');
-});
+module.exports = router;
