@@ -1,0 +1,86 @@
+/**
+ * @param { import("knex").Knex } knex
+ * @returns { Promise<void> } 
+ */
+exports.seed = async function(knex) {
+  await knex('instruments').del()
+  await knex('instruments').insert([
+    {
+      flute: true,
+      piccolo: true,
+      oboe: false,
+      bassoon: false,
+      clarinetBb: true,
+      clarinetEb: false,
+      saxAlto: false,
+      saxTenor: false,
+      saxBaritone: false,
+    },
+    {
+      flute: false,
+      piccolo: false,
+      oboe: false,
+      bassoon: false,
+      clarinetBb: true,
+      clarinetEb: false,
+      saxAlto: true,
+      saxTenor: true,
+      saxBaritone: false,
+    },
+    {
+      flute: false,
+      piccolo: false,
+      oboe: true,
+      bassoon: true,
+      clarinetBb: false,
+      clarinetEb: false,
+      saxAlto: true,
+      saxTenor: true,
+      saxBaritone: false,
+    },
+    {
+      flute: true,
+      piccolo: false,
+      oboe: false,
+      bassoon: false,
+      clarinetBb: true,
+      clarinetEb: true,
+      saxAlto: false,
+      saxTenor: true,
+      saxBaritone: false,
+    },
+    {
+      flute: true,
+      piccolo: false,
+      oboe: false,
+      bassoon: false,
+      clarinetBb: true,
+      clarinetEb: false,
+      saxAlto: true,
+      saxTenor: false,
+      saxBaritone: true,
+    },
+    {
+      flute: true,
+      piccolo: true,
+      oboe: true,
+      bassoon: true,
+      clarinetBb: false,
+      clarinetEb: false,
+      saxAlto: false,
+      saxTenor: false,
+      saxBaritone: false,
+    },
+    {
+      flute: false,
+      piccolo: false,
+      oboe: false,
+      bassoon: false,
+      clarinetBb: true,
+      clarinetEb: true,
+      saxAlto: false,
+      saxTenor: true,
+      saxBaritone: true,
+    },
+  ]);
+};

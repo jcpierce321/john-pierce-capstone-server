@@ -11,8 +11,19 @@ exports.up = function(knex) {
         table.string("city").notNullable();
         table.string("website_url").notNullable();
         table.string("primary_instrument").notNullable();
-        table.timestamp('created_at').defaultTo(knex.fn.now());
-        table.timestamp('updated_at').defaultTo(knex.raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+        exports.up = function(knex) {
+            return knex.schema.table('instruments', function(table) {
+              table.integer('user_id').unsigned();
+              table.foreign('user_id').references('users.id');
+            });
+          };
+          
+          exports.down = function(knex) {
+            return knex.schema.table('instruments', function(table) {
+              table.dropForeign('user_id');
+              table.dropColumn('user_id');
+            });
+          };
     });  
 };
 
