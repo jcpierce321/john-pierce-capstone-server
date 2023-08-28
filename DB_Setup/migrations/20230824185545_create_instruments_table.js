@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function(knex) {
-    return knex.schema.createTable("instrument", function(table) {
+    return knex.schema.createTable("instruments", function(table) {
         table.increments("id");
         table.boolean("flute").notNullable();
         table.boolean("piccolo").notNullable();
@@ -19,7 +19,7 @@ exports.up = function(knex) {
         table
             .integer("user_id")
             .unsigned()
-            .references("user.id")
+            .references("users.id")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
 
