@@ -1,23 +1,20 @@
-// const express = require('express');
-// const cors = require('cors');
-// const knex = require('knex');
-// const knexConfig = require('./knexfile');
 
-const knexConfig = require("../knexfile");
-const knex = require("knex")(knexConfig.development);
-
+const cors = require('cors');
 const express = require('express');
-const router = express.Router();
+const knex = require('knex');
+const knexConfig = require('./knexfile');
 
-const usersRoutes = require("./users");
-router.use("/users", usersRoutes);
+require('dotenv').config();
 
-const instrumentsRoutes = require("./instruments");
-router.use("/instruments", instrumentsRoutes);
+const app = express();
+const routes = require('./routes/index');
 
-router.get("/", async (req, res) => {
-  console.log(req.body);
-  res.status(200).json({ message: "This is home!" });
+app.use(cors());
+app.use(express.json());
+
+app.use('/', routes);
+
+const PORT = process.env.PORT ||8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-module.exports = router;
