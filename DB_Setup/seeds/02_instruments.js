@@ -7,6 +7,7 @@ exports.seed = async function(knex) {
   await knex('instruments').insert([
     {
       id: 1,
+      user_id: 1,
       flute: true,
       piccolo: true,
       oboe: false,
@@ -19,6 +20,7 @@ exports.seed = async function(knex) {
     },
     {
       id: 2,
+      user_id: 2,
       flute: false,
       piccolo: false,
       oboe: false,
@@ -31,6 +33,7 @@ exports.seed = async function(knex) {
     },
     {
       id: 3,
+      user_id: 3,
       flute: false,
       piccolo: false,
       oboe: true,
@@ -43,6 +46,7 @@ exports.seed = async function(knex) {
     },
     {
       id: 4,
+      user_id: 4,
       flute: true,
       piccolo: false,
       oboe: false,
@@ -55,6 +59,7 @@ exports.seed = async function(knex) {
     },
     {
       id: 5,
+      user_id: 5,
       flute: true,
       piccolo: false,
       oboe: false,
@@ -67,6 +72,7 @@ exports.seed = async function(knex) {
     },
     {
       id: 6,
+      user_id: 6,
       flute: true,
       piccolo: true,
       oboe: true,
@@ -79,6 +85,7 @@ exports.seed = async function(knex) {
     },
     {
       id: 7,
+      user_id: 7,
       flute: false,
       piccolo: false,
       oboe: false,

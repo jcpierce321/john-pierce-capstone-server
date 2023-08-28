@@ -11,19 +11,20 @@ exports.up = async function(knex) {
       table.string("city").notNullable();
       table.string("website_url").notNullable();
       table.string("primary_inst").notNullable();
+      table.timestamps(true, true);
   });
 
-  await knex.schema.table('instruments', function(table) {
-      table.integer('user_id').unsigned();
-      table.foreign('user_id').references('users.id');
-  });
+  // await knex.schema.table('instruments', function(table) {
+  //     table.integer('user_id').unsigned();
+  //     table.foreign('user_id').references('users.id');
+  // });
 };
 
 exports.down = async function(knex) {
-  await knex.schema.table('instruments', function(table) {
-      table.dropForeign('user_id');
-      table.dropColumn('user_id');
-  });
+  // await knex.schema.table('instruments', function(table) {
+  //     table.dropForeign('user_id');
+  //     table.dropColumn('user_id');
+  // });
 
   await knex.schema.dropTableIfExists("users");
 };
