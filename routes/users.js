@@ -18,6 +18,19 @@ router.get("/", async (_req, res) => {
     }
 });
 
+// router.get("/:id/instruments", async (req, res) => {
+//     const userId = req.params.id;
+
+//     try {
+//         const instruments = await knex("instruments").where("user_id", userId);
+
+//         res.status(200).json(instruments);
+//     } catch (error) {
+//         console.error("Error retrieving instruments", error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// });
+
 router.get("/:id", async (req, res) => {
     const userId = req.params.id;
 
@@ -35,6 +48,10 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+
+
+
+
 router.post('/', async (req, res) => {
     try {
       const {
@@ -43,7 +60,16 @@ router.post('/', async (req, res) => {
         telephone,
         city,
         website_url,
-        primary_inst 
+        primary_inst,
+        flute,
+        piccolo,
+        oboe,
+        bassoon,
+        clarinetBb,
+        clarinetEb,
+        saxAlto,
+        saxTenor,
+        saxBaritone
     } = req.body;
   
       if (
@@ -63,17 +89,26 @@ router.post('/', async (req, res) => {
         telephone,
         city,
         website_url,
-        primary_inst
+        primary_inst,
+        flute,
+        piccolo,
+        oboe,
+        bassoon,
+        clarinetBb,
+        clarinetEb,
+        saxAlto,
+        saxTenor,
+        saxBaritone,
       };
-  
-    //   const userIds = await knex('users').insert(newUser);
-  
-    //   if (userIds.length === 0) {
-    //     return res.status(500).json({ error: 'Failed to create user' });
-    //   }
-  
-    //   const userId = userIds[0];
-    //   newUser.id = userId;
+
+      const userIds = await knex('users').insert(newUser);
+
+      if (userIds.length === 0) {
+        return res.addTrailers.status(500).json({ error: 'Failed to create user' });
+      }
+
+      const userId = userIds[0];
+      newUser.user_id = userId;
   
       res.status(201).json(newUser);
     } catch (error) {
@@ -82,48 +117,62 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.post('/instruments', async (req, res) => {
-    try {
-        const {
-            user_id,
-            flute,
-            piccolo,
-            oboe,
-            bassoon,
-            clarinetBb,
-            clarinetEb,
-            saxAlto,
-            saxTenor,
-            saxBaritone 
-        } = req.body;
+// router.post('/:id/instruments', async (req, res) => {
+//     try {
+//         const {
+//             user_id,
+//             flute,
+//             piccolo,
+//             oboe,
+//             bassoon,
+//             clarinetBb,
+//             clarinetEb,
+//             saxAlto,
+//             saxTenor,
+//             saxBaritone 
+//         } = req.body;
 
-        const instrumentData = {
-            user_id,
-            flute: flute === 'true',
-            piccolo: piccolo === 'true',
-            oboe: oboe === 'true',
-            bassoon: bassoon === 'true',
-            clarinetBb: clarinetBb === 'true',
-            clarinetEb: clarinetEb === 'true',
-            saxAlto: saxAlto === 'true',
-            saxTenor: saxTenor === 'true',
-            saxBaritone: saxBaritone === 'true'
-        };
+//         const instrumentData = {
+//             user_id,
+//             flute: flute === 'true',
+//             piccolo: piccolo === 'true',
+//             oboe: oboe === 'true',
+//             bassoon: bassoon === 'true',
+//             clarinetBb: clarinetBb === 'true',
+//             clarinetEb: clarinetEb === 'true',
+//             saxAlto: saxAlto === 'true',
+//             saxTenor: saxTenor === 'true',
+//             saxBaritone: saxBaritone === 'true'
+//         };
 
-        const instrumentIds = await knex('instruments').insert(instrumentData);
+//         console.log('Request body:', req.body);
+//         console.log('Instrument Data:', instrumentData);
 
-        if (instrumentIds.length === 0) {
-            return res.status(500).json({ error: 'Failed to create instrument'});
-        }
+//         console.log('user_id:', user_id);
 
-        const instrumentId = instrumentIds[0];
-        instrumentData.id = instrumentId;
+//         const userIds = await knex('users').insert({ user_id });
+//         console.log('Inserted User IDs', userIds);
 
-        res.status(201).json(instrumentData);
-    } catch (error) {
-        console.error('Error creating instrument', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
+//         console.log('Generated User IDs:', userIds);
+
+//         const instrumentIds = await knex('instruments').insert(instrumentData);
+//         console.log('Instrument IDs:', instrumentIds);
+
+//         if (instrumentIds.length === 0) {
+//             return res.status(500).json({ error: 'Failed to create instrument'});
+//         }
+
+//         const instrumentId = instrumentIds[0];
+//         instrumentData.id = instrumentId;
+
+//         console.log("Inserted Instrument ID:", instrumentId);
+//         console.log("Instrument Data Response:", instrumentData);
+
+//         res.status(201).json(instrumentData);
+//     } catch (error) {
+//         console.error('Error creating instrument', error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
 
 module.exports = router;

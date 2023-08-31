@@ -5,7 +5,6 @@ const express = require("express");
 const router = express.Router();
 
 const usersRoutes = require("./users");
-console.log("Setting up /users route")
 router.use("/users", usersRoutes);
 
 // const instrumentsRoutes = require("./instruments");

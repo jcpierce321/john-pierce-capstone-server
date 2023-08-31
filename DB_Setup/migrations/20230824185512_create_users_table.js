@@ -11,20 +11,20 @@ exports.up = async function(knex) {
       table.string("city").notNullable();
       table.string("website_url").notNullable();
       table.string("primary_inst").notNullable();
+      table.boolean("flute").notNullable().defaultTo(false);
+      table.boolean("piccolo").notNullable().defaultTo(false);
+      table.boolean("oboe").notNullable().defaultTo(false);
+      table.boolean("bassoon").notNullable().defaultTo(false);
+      table.boolean("clarinetBb").notNullable().defaultTo(false);
+      table.boolean("clarinetEb").notNullable().defaultTo(false);
+      table.boolean("saxAlto").notNullable().defaultTo(false);
+      table.boolean("saxTenor").notNullable().defaultTo(false);
+      table.boolean("saxBaritone").notNullable().defaultTo(false);
       table.timestamps(true, true);
   });
-
-  // await knex.schema.table('instruments', function(table) {
-  //     table.integer('user_id').unsigned();
-  //     table.foreign('user_id').references('users.id');
-  // });
 };
 
 exports.down = async function(knex) {
-  // await knex.schema.table('instruments', function(table) {
-  //     table.dropForeign('user_id');
-  //     table.dropColumn('user_id');
-  // });
 
   await knex.schema.dropTableIfExists("users");
 };
