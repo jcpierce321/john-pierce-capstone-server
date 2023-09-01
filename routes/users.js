@@ -18,18 +18,27 @@ router.get("/", async (_req, res) => {
     }
 });
 
-// router.get("/:id/instruments", async (req, res) => {
-//     const userId = req.params.id;
+router.get("/search", async (req, res) => {
+  try {
+      const { instruments } = req.query;
 
-//     try {
-//         const instruments = await knex("instruments").where("user_id", userId);
+      const instrumentArray = instruments.split(',');
 
-//         res.status(200).json(instruments);
-//     } catch (error) {
-//         console.error("Error retrieving instruments", error);
-//         res.status(500).json({ error: "Internal server error" });
-//     }
-// });
+      let query = knex('users');
+
+      for (const instrument of instrumentArray) {
+          query = query.where(instrument, true);
+      }
+
+      const users = await query.select();
+
+      res.status(200).json(users);
+  } catch (error) {
+      console.error("Error retrieving users", error);
+      res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 router.get("/:id", async (req, res) => {
     const userId = req.params.id;
@@ -117,62 +126,5 @@ router.post('/', async (req, res) => {
     }
 });
 
-// router.post('/:id/instruments', async (req, res) => {
-//     try {
-//         const {
-//             user_id,
-//             flute,
-//             piccolo,
-//             oboe,
-//             bassoon,
-//             clarinetBb,
-//             clarinetEb,
-//             saxAlto,
-//             saxTenor,
-//             saxBaritone 
-//         } = req.body;
-
-//         const instrumentData = {
-//             user_id,
-//             flute: flute === 'true',
-//             piccolo: piccolo === 'true',
-//             oboe: oboe === 'true',
-//             bassoon: bassoon === 'true',
-//             clarinetBb: clarinetBb === 'true',
-//             clarinetEb: clarinetEb === 'true',
-//             saxAlto: saxAlto === 'true',
-//             saxTenor: saxTenor === 'true',
-//             saxBaritone: saxBaritone === 'true'
-//         };
-
-//         console.log('Request body:', req.body);
-//         console.log('Instrument Data:', instrumentData);
-
-//         console.log('user_id:', user_id);
-
-//         const userIds = await knex('users').insert({ user_id });
-//         console.log('Inserted User IDs', userIds);
-
-//         console.log('Generated User IDs:', userIds);
-
-//         const instrumentIds = await knex('instruments').insert(instrumentData);
-//         console.log('Instrument IDs:', instrumentIds);
-
-//         if (instrumentIds.length === 0) {
-//             return res.status(500).json({ error: 'Failed to create instrument'});
-//         }
-
-//         const instrumentId = instrumentIds[0];
-//         instrumentData.id = instrumentId;
-
-//         console.log("Inserted Instrument ID:", instrumentId);
-//         console.log("Instrument Data Response:", instrumentData);
-
-//         res.status(201).json(instrumentData);
-//     } catch (error) {
-//         console.error('Error creating instrument', error);
-//         res.status(500).json({ error: 'Internal server error' });
-//     }
-// });
 
 module.exports = router;
