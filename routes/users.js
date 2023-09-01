@@ -18,16 +18,38 @@ router.get("/", async (_req, res) => {
     }
 });
 
+const instrumentMapping = {
+    'Flute': 'flute',
+    'Piccolo': 'piccolo',
+    'Oboe': 'oboe',
+    'Bassoon': 'bassoon',
+    'B-flat clarinet': 'clarinetBb',
+    'E-flat clarinet': 'clarinetEb',
+    'Alto saxophone': 'saxAlto',
+    'Tenor saxophone': 'saxTenor',
+    'Baritone saxophone': 'saxBaritone',
+};
+
 router.get("/search", async (req, res) => {
   try {
-      const { instruments } = req.query;
+      const { instruments, primary_inst } = req.query;
 
-      const instrumentArray = instruments.split(',');
+      if (typeof instruments === 'string') {
+        instruments = [instruments];
+      }
+
+      const validInstrumentArray = instruments.map(instrument => {
+        return instrumentMapping[instrument] || instrument;
+      });
 
       let query = knex('users');
 
-      for (const instrument of instrumentArray) {
-          query = query.where(instrument, true);
+      validInstrumentArray.forEach(instrument => {
+        query = query.where(instrument, true);
+      });
+  
+      if (primary_inst) {
+        query = query.andWhere('primary_inst', primary_inst);
       }
 
       const users = await query.select();
