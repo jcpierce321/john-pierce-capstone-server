@@ -61,7 +61,6 @@ router.get("/search", async (req, res) => {
   }
 });
 
-
 router.get("/:id", async (req, res) => {
     const userId = req.params.id;
 
@@ -78,8 +77,6 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
-
-
 
 
 
@@ -147,6 +144,5 @@ router.post('/', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
 });
-
 
 module.exports = router;

@@ -7,9 +7,6 @@ const router = express.Router();
 const usersRoutes = require("./users");
 router.use("/users", usersRoutes);
 
-// const instrumentsRoutes = require("./instruments");
-// router.use("/instruments", instrumentsRoutes);
-
 router.get("/", async (req, res) => {
   console.log(req.body);
   res.status(200).json({ message: "This is home!" });
