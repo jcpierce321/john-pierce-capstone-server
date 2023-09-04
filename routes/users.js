@@ -7,6 +7,18 @@ router.use(express.json());
 require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 
+const instrumentMapping = {
+  'Flute': 'flute',
+  'Piccolo': 'piccolo',
+  'Oboe': 'oboe',
+  'Bassoon': 'bassoon',
+  'B-flat clarinet': 'clarinetBb',
+  'E-flat clarinet': 'clarinetEb',
+  'Alto saxophone': 'saxAlto',
+  'Tenor saxophone': 'saxTenor',
+  'Baritone saxophone': 'saxBaritone',
+};
+
 router.get("/", async (_req, res) => {
     try {
       const users = await knex("users");
@@ -17,18 +29,6 @@ router.get("/", async (_req, res) => {
       res.status(500).json({ error: "Internal server error" });
     }
 });
-
-const instrumentMapping = {
-    'Flute': 'flute',
-    'Piccolo': 'piccolo',
-    'Oboe': 'oboe',
-    'Bassoon': 'bassoon',
-    'B-flat clarinet': 'clarinetBb',
-    'E-flat clarinet': 'clarinetEb',
-    'Alto saxophone': 'saxAlto',
-    'Tenor saxophone': 'saxTenor',
-    'Baritone saxophone': 'saxBaritone',
-};
 
 router.get("/search", async (req, res) => {
   try {
@@ -44,12 +44,12 @@ router.get("/search", async (req, res) => {
 
       let query = knex('users');
 
-      validInstrumentArray.forEach(instrument => {
-        query = query.where(instrument, true);
-      });
-  
+      for (const instrument of validInstrumentArray) {
+          query = query.where(instrument, true);
+      }
+
       if (primary_inst) {
-        query = query.andWhere('primary_inst', primary_inst);
+        query = query.where('primary_inst', primary_inst);
       }
 
       const users = await query.select();
